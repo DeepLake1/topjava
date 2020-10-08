@@ -8,7 +8,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html lang="ru">
 
 <head>
@@ -19,8 +19,6 @@
     <p>${meal}</p>
     <c:set var ="dateTime" value ="${meal.dateTime}"/>
     <fmt:parseDate value="${dateTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-
-
     <p><fmt:formatDate type = "both" dateStyle = "short" timeStyle = "short" value="${parsedDateTime}" /></p>
 </c:forEach>
 </h2>
