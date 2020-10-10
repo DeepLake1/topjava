@@ -15,13 +15,38 @@
     <title>Meals</title>
 </head>
 <body>
-<h2><c:forEach var="meal" items="${mealList}">
-    <p>${meal}</p>
-    <c:set var ="dateTime" value ="${meal.dateTime}"/>
+
+<table border = "2">
+    <caption>Meals</caption>
+    <tr>
+    <th>Date</th>
+    <th>Description</th>
+    <th> Calories</th>
+    <th> </th>
+    <th> </th>
+    </tr>
+<c:forEach var="meal" items="${mealList}">
+   <tr bgcolor="${meal.excess == true ? 'green' : 'red'}">
+        <td><c:set var ="dateTime" value ="${meal.dateTime}"/>
     <fmt:parseDate value="${dateTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-    <p><fmt:formatDate type = "both" dateStyle = "short" timeStyle = "short" value="${parsedDateTime}" /></p>
+    <fmt:formatDate type = "both" dateStyle = "short" timeStyle = "short" value="${parsedDateTime}" />
+        </td>
+        <td>${meal.description}</td>
+        <td>${meal.calories}</td>
+       <td><form>
+           <button>Update</button>
+       </form></td>
+       <td><form>
+           <button>Delete</button>
+           </form></td>
+    </tr>
+
+
 </c:forEach>
-</h2>
+</table>
+<form>
+    <button>Add Meal</button>
+</form>
 
 </body>
 </html>

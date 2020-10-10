@@ -11,6 +11,18 @@ public class MealTo {
 
     private final boolean excess;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public boolean isExcess() {
+        return excess;
+    }
+
     public LocalDateTime getDateTime() {
         return dateTime;
     }
