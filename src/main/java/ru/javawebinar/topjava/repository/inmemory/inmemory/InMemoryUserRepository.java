@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
-
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
