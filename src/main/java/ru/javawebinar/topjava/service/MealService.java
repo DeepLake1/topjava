@@ -24,7 +24,7 @@ public class MealService {
     private MealRepository repository;
 
     public Meal save(Meal meal, int userId) {
-        return checkNotFound(repository.save(meal, userId), String.valueOf(userId));
+        return checkNotFound(repository.save(meal, userId), String.valueOf(meal.getId()));
     }
 
     public void delete(int id, int userId) {
