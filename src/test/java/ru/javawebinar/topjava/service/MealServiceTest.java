@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -8,11 +10,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.javawebinar.topjava.RuleForTest;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
@@ -26,12 +31,37 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+    private static final Map<String, Long> testAndTimeToComplete = new HashMap<>();
+    private long timeOfTestStart;
 
+    @Rule
+    public TestWatcher testWatcher = new TestWatcher() {
+        @Override
+        protected void starting(Description description) {
+            timeOfTestStart = System.currentTimeMillis();
+            super.starting(description);
+
+        }
+
+        @Override
+        protected void finished(Description description) {
+            long timeOfTest = System.currentTimeMillis() - timeOfTestStart;
+            testAndTimeToComplete.put(description.getMethodName(), timeOfTest);
+            System.out.println("--------Method name: >" + description.getMethodName() + "< completed in " + timeOfTest + "ms --------");
+            super.finished(description);
+        }
+    };
     @Autowired
     private MealService service;
 
+    @AfterClass
+    public static void afterClass() {
+        testAndTimeToComplete.forEach((d, v) -> System.out.println("+++++++++++Test with name: " + d + " completed in " + v + "ms +++++++++++"));
+    }
+
     @Test
     public void delete() throws Exception {
+
         service.delete(MEAL1_ID, USER_ID);
         assertThrows(NotFoundException.class, () -> service.get(MEAL1_ID, USER_ID));
     }
