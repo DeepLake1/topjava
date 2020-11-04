@@ -10,9 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 @NamedQueries({
-       @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal u WHERE u.id=:id"),
+       @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id AND m.user.id =:userId"),
         @NamedQuery(name = Meal.GET, query = "SELECT m FROM Meal m  WHERE m.id=:id"),
-        @NamedQuery(name = Meal.getBetweenHalfOpen, query = "SELECT m FROM Meal m  WHERE m.id=:id AND m.date_time >=:startDateTime AND m.date_time <:endDateTime"),
+        @NamedQuery(name = Meal.getBetweenHalfOpen, query = "SELECT m FROM Meal m  WHERE m.user.id=:userId AND m.dateTime >=:startDateTime AND m.dateTime <:endDateTime ORDER BY m.dateTime DESC"),
         @NamedQuery(name = Meal.GET_ALL, query = "SELECT m FROM Meal m WHERE m.user.id=:userId ORDER BY m.dateTime DESC"),
 })
 @Entity
