@@ -35,4 +35,10 @@ public class RootController {
         SecurityUtil.setAuthUserId(userId);
         return "redirect:meals";
     }
+
+    @GetMapping("/meals")
+    public String getMeals(Model model){
+        model.addAttribute("meals", mealService.getAll(SecurityUtil.authUserId()));
+        return "meals";
+    }
 }
