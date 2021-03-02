@@ -17,6 +17,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
 import ru.javawebinar.topjava.repository.JpaUtil;
 
 import static org.junit.Assert.assertThrows;
@@ -36,8 +37,8 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Before
     public void setUp() {
         cacheManager.getCache("users").clear();
-       if(jpaUtil!=null)
-        jpaUtil.clear2ndLevelHibernateCache();
+        if (jpaUtil != null)
+            jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test
@@ -99,7 +100,8 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     public void createWithException() {
-       validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)), ConstraintViolationException.class);
+        Assume.assumeTrue("Only supported by JPA profiles!", isJpaBased());
+        validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", 9, true, new Date(), Set.of())), ConstraintViolationException.class);
