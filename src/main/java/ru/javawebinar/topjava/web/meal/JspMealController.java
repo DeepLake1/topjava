@@ -27,8 +27,12 @@ public class JspMealController extends AbstractMealController {
     @GetMapping("/delete")
     public void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
     super.delete(getId(request));
-    response.sendRedirect("meals");
-
+    response.sendRedirect("/meals");
+    }
+    @GetMapping("/update")
+    public void updateOrCreate( HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setAttribute("meal", meal);
+        request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
     }
 
     private int getId(HttpServletRequest request) {
