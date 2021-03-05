@@ -1,14 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <html>
-    <jsp:include page="fragments/headTag.jsp"/>
-<jsp:include page="fragments/bodyHeader.jsp"/>
+<html>
+<jsp:include page="fragments/headTag.jsp"/>
 
 
 <body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+
 <section>
-    <h3><a href="index.html">Home</a></h3>
+
     <hr>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
 
