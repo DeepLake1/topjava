@@ -44,6 +44,16 @@ public class JspMealController extends AbstractMealController {
         model.addAttribute("meal", new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), "", 1000));
         return "mealForm";
     }
+    @GetMapping("/filter")
+    public String getWithFilter(HttpServletRequest request, Model model){
+        LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+        LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+        LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+        LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
+
+        model.addAttribute("meals", super.getBetween(startDate, startTime, endDate, endTime));
+        return "meals";
+    }
 
     @PostMapping
     public String doPost(HttpServletRequest request) throws IOException {
@@ -58,7 +68,7 @@ public class JspMealController extends AbstractMealController {
         } else {
             super.update(meal, getId(request));
         }
-        return "/meals";
+        return "redirect:/meals";
     }
 
     private int getId(HttpServletRequest request) {
