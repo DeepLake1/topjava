@@ -46,7 +46,7 @@ public class JspMealController extends AbstractMealController {
     }
 
     @PostMapping
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String doPost(HttpServletRequest request) throws IOException {
         request.setCharacterEncoding("UTF-8");
         Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
@@ -58,7 +58,8 @@ public class JspMealController extends AbstractMealController {
         } else {
             super.update(meal, getId(request));
         }
-        response.sendRedirect("/meals");}
+        return "meals";
+    }
 
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
