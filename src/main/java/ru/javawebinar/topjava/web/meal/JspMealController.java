@@ -58,7 +58,7 @@ public class JspMealController extends AbstractMealController {
         } else {
             super.update(meal, getId(request));
         }
-        return "meals";
+        return "/meals";
     }
 
     private int getId(HttpServletRequest request) {
