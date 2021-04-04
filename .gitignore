@@ -6,3 +6,7 @@ log
 *.patch
 
 
+/doc/lesson08.md
+/doc/lesson09.md
+/doc/lesson10.md
+/doc/lesson11.md
